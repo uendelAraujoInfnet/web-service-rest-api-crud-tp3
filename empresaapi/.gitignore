@@ -1,0 +1,124 @@
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# =========================
+# Java / Build
+# =========================
+/target/
+/build/
+/out/
+*.class
+*.jar
+*.war
+*.ear
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+# =========================
+# Eclipse / NetBeans
+# =========================
+.settings/
+.buildpath
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Logs / temp
+# =========================
+logs/
+*.log
+hs_err_pid*
+*.tmp
+tmp/
+temp/
+
+# =========================
+# Database files (H2, SQLite etc.)
+# =========================
+*.h2.db
+*.mv.db
+*.db
+*.sqlite
+*.sqlite3
+
+# =========================
+# IDE / tooling caches
+# =========================
+.idea/
+/.cache
+/.gradle/
+/.recommenders
+
+# =========================
+# Secrets / env / keystores
+# =========================
+.env
+.env.local
+*.env
+*.properties.local
+secrets.yml
+*.jks
+*.keystore
+*.p12
+credencials.*
+credentials.*
+
+# =========================
+# Generated sources / build artifacts
+# =========================
+generated-sources/
+/release/
+
+# =========================
+# CI / service files
+# =========================
+/.vagrant/
+/terraform.tfstate
+/*.log
+
+# =========================
+# Misc
+# =========================
+*.pid
+*.seed
+
+# =========================
+# Optional: vendor / node (if you ever add frontend)
+# =========================
+node_modules/
+npm-debug.log
+yarn-error.log
