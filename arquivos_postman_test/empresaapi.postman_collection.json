@@ -1,0 +1,355 @@
+{
+  "info": {
+    "name": "Empresa API - Collection",
+    "description": "Collection para testar endpoints: employees, products, suppliers, customers, departments (GET/POST/PUT/DELETE). Java21 / Spring Boot 3.5.5",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": {
+      "major": 1,
+      "minor": 0,
+      "patch": 0
+    }
+  },
+  "item": [
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "List Employees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Employee",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao.silva@example.com\",\n  \"role\": \"Desenvolvedor\",\n  \"salary\": 4500.0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employees",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "try {",
+                  "    var data = pm.response.json();",
+                  "    if (data && data.id) {",
+                  "        pm.environment.set(\"employeeId\", data.id);",
+                  "        console.log('employeeId set to', data.id);",
+                  "    }",
+                  "} catch (e) { console.log('no json in response'); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Employee by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees", "{{employeeId}}"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Update Employee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"João Silva\",\n  \"email\": \"joao.silva@example.com\",\n  \"role\": \"Senior Desenvolvedor\",\n  \"salary\": 6000.0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees", "{{employeeId}}"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Delete Employee",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/employees/{{employeeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "employees", "{{employeeId}}"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "List Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Parafuso M6\",\n  \"sku\": \"PAR-M6-001\",\n  \"stock\": 150,\n  \"price\": 0.75\n}" },
+            "url": { "raw": "{{baseUrl}}/api/products", "host": ["{{baseUrl}}"], "path": ["api", "products"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status is 201\", () => pm.response.to.have.status(201));",
+                  "try { var data = pm.response.json(); if (data && data.id) pm.environment.set('productId', data.id);}catch(e){}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Product by Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/products/{{productId}}", "host": ["{{baseUrl}}"], "path": ["api", "products", "{{productId}}"] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Parafuso M6\",\n  \"sku\": \"PAR-M6-001\",\n  \"stock\": 200,\n  \"price\": 0.80\n}" },
+            "url": { "raw": "{{baseUrl}}/api/products/{{productId}}", "host": ["{{baseUrl}}"], "path": ["api", "products", "{{productId}}"] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/products/{{productId}}", "host": ["{{baseUrl}}"], "path": ["api", "products", "{{productId}}"] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 204\", () => pm.response.to.have.status(204));"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Suppliers",
+      "item": [
+        {
+          "name": "List Suppliers",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/suppliers", "host": ["{{baseUrl}}"], "path": ["api", "suppliers"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Create Supplier",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Fornecedor ABC Ltda\",\n  \"contactName\": \"Maria\",\n  \"email\": \"contato@abc.com\",\n  \"phone\": \"+55 11 99999-9999\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/suppliers", "host": ["{{baseUrl}}"], "path": ["api", "suppliers"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": { "exec": ["pm.test(\"Status is 201\", () => pm.response.to.have.status(201));", "try { var d=pm.response.json(); if(d && d.id) pm.environment.set('supplierId', d.id);}catch(e){}"] }
+            }
+          ]
+        },
+        {
+          "name": "Get Supplier by Id",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/suppliers/{{supplierId}}", "host": ["{{baseUrl}}"], "path": ["api","suppliers","{{supplierId}}"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Update Supplier",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Fornecedor ABC Ltda\",\n  \"contactName\": \"Maria Silva\",\n  \"email\": \"contato@abc.com\",\n  \"phone\": \"+55 11 99999-0000\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/suppliers/{{supplierId}}", "host": ["{{baseUrl}}"], "path": ["api","suppliers","{{supplierId}}"] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Delete Supplier",
+          "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/suppliers/{{supplierId}}", "host": ["{{baseUrl}}"], "path": ["api","suppliers","{{supplierId}}"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 204\", () => pm.response.to.have.status(204));"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "List Customers",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/customers", "host": ["{{baseUrl}}"], "path": ["api","customers"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Cliente XYZ\",\n  \"email\": \"cliente@xyz.com\",\n  \"phone\": \"+55 21 98888-8888\",\n  \"address\": \"Rua A, 123, Cidade\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/customers", "host": ["{{baseUrl}}"], "path": ["api","customers"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": { "exec": ["pm.test(\"Status is 201\", () => pm.response.to.have.status(201));", "try { var d = pm.response.json(); if (d && d.id) pm.environment.set('customerId', d.id);}catch(e){}"] }
+            }
+          ]
+        },
+        {
+          "name": "Get Customer by Id",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/customers/{{customerId}}", "host": ["{{baseUrl}}"], "path": ["api","customers","{{customerId}}"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Cliente XYZ Ltda\",\n  \"email\": \"cliente@xyz.com\",\n  \"phone\": \"+55 21 97777-7777\",\n  \"address\": \"Rua A, 123, Cidade - apto 2\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/customers/{{customerId}}", "host": ["{{baseUrl}}"], "path": ["api","customers","{{customerId}}"] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Delete Customer",
+          "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/customers/{{customerId}}", "host": ["{{baseUrl}}"], "path": ["api","customers","{{customerId}}"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 204\", () => pm.response.to.have.status(204));"] } }]
+        }
+      ]
+    },
+    {
+      "name": "Departments",
+      "item": [
+        {
+          "name": "List Departments",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/departments", "host": ["{{baseUrl}}"], "path": ["api","departments"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Create Department",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Produção\",\n  \"description\": \"Equipe responsável pela fabricação\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/departments", "host": ["{{baseUrl}}"], "path": ["api","departments"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": { "exec": ["pm.test(\"Status is 201\", () => pm.response.to.have.status(201));", "try { var d=pm.response.json(); if(d && d.id) pm.environment.set('departmentId', d.id);}catch(e){}"] }
+            }
+          ]
+        },
+        {
+          "name": "Get Department by Id",
+          "request": { "method": "GET", "header": [], "url": { "raw": "{{baseUrl}}/api/departments/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api","departments","{{departmentId}}"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Update Department",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Produção\",\n  \"description\": \"Equipe responsável pela fabricação e controle de qualidade\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/departments/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api","departments","{{departmentId}}"] }
+          },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 200\", () => pm.response.to.have.status(200));"] } }]
+        },
+        {
+          "name": "Delete Department",
+          "request": { "method": "DELETE", "header": [], "url": { "raw": "{{baseUrl}}/api/departments/{{departmentId}}", "host": ["{{baseUrl}}"], "path": ["api","departments","{{departmentId}}"] } },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test(\"Status is 204\", () => pm.response.to.have.status(204));"] } }]
+        }
+      ]
+    }
+  ]
+}
